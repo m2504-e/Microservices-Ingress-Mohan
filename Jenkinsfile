@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
-                git 'https://github.com/KastroVKiran/microservices-ingress.git'
+                git ' https://github.com/m2504-e/Microservices-Ingress-Mohan.git
             }
         }
 
@@ -65,7 +65,7 @@ pipeline {
                 echo 'Deploying application to Kubernetes...'
                 script {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
-                        sh "sed -i 's|mohan2504/techsolutions-app:latest|mohan2504/techsolutions-app:${env.IMAGE_TAG}|g' k8s/deployment.yaml"
+                        sh "sed -i 's|m2504-e/techsolutions-app:latest|m2504-e/techsolutions-app:${env.IMAGE_TAG}|g' k8s/deployment.yaml"
                         sh "kubectl apply -f k8s/deployment.yaml"
                         sh "kubectl rollout status deployment/${APP_NAME}-deployment --timeout=300s"
                         sh "kubectl get pods -l app=${APP_NAME}"
